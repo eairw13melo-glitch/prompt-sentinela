@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as cheerio from 'cheerio';
+import axios from "axios";
+import * as cheerio from "cheerio";
 
 export default async function handler(req, res) {
   const { url } = req.query;
@@ -9,8 +9,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ✅ PROXY (ESSENCIAL)
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+    // ✅ Proxy mais confiável
+    const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(url);
 
     const response = await axios.get(proxyUrl);
     const html = response.data;
@@ -19,7 +19,6 @@ export default async function handler(req, res) {
 
     const titulo = $("h1").first().text().trim();
 
-    // Texto base
     let textoBase = "";
     $("p").each((i, el) => {
       const t = $(el).text();
@@ -29,7 +28,6 @@ export default async function handler(req, res) {
       }
     });
 
-    // Parágrafos
     let paragrafos = 0;
     $("p").each((i, el) => {
       const t = $(el).text().trim();
@@ -38,7 +36,6 @@ export default async function handler(req, res) {
       }
     });
 
-    // Perguntas
     let perguntas = "";
     $("p").each((i, el) => {
       const t = $(el).text().trim();
@@ -55,10 +52,11 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
+    console.error(error);
+
     return res.status(500).json({
-      erro: "Erro ao buscar conteúdo",
+      erro: "Erro real na API",
       detalhe: error.message
     });
   }
 }
-``
