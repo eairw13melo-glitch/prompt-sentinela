@@ -9,7 +9,11 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+  headers: {
+    "User-Agent": "Mozilla/5.0"
+  }
+});
     const html = response.data;
 
     const $ = cheerio.load(html);
