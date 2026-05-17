@@ -9,14 +9,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await axios.get(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        "Accept-Language": "pt-BR,pt;q=0.9"
-      }
-    });
+    // ✅ USANDO PROXY (ESSENCIAL)
+    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
 
+    const response = await axios.get(proxyUrl);
     const html = response.data;
+
     const $ = cheerio.load(html);
 
     // 🔎 Título
@@ -32,7 +30,7 @@ export default async function handler(req, res) {
       }
     });
 
-    // 🔎 Contar parágrafos (melhorado)
+    // 🔎 Contar parágrafos
     let paragrafos = 0;
     $("p").each((i, el) => {
       const t = $(el).text().trim();
