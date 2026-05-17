@@ -9,18 +9,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ✅ USANDO PROXY (ESSENCIAL)
-    const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+    // ✅ PROXY (ESSENCIAL)
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
 
     const response = await axios.get(proxyUrl);
     const html = response.data;
 
     const $ = cheerio.load(html);
 
-    // 🔎 Título
     const titulo = $("h1").first().text().trim();
 
-    // 🔎 Texto base
+    // Texto base
     let textoBase = "";
     $("p").each((i, el) => {
       const t = $(el).text();
@@ -30,7 +29,7 @@ export default async function handler(req, res) {
       }
     });
 
-    // 🔎 Contar parágrafos
+    // Parágrafos
     let paragrafos = 0;
     $("p").each((i, el) => {
       const t = $(el).text().trim();
@@ -39,7 +38,7 @@ export default async function handler(req, res) {
       }
     });
 
-    // 🔎 Perguntas finais
+    // Perguntas
     let perguntas = "";
     $("p").each((i, el) => {
       const t = $(el).text().trim();
@@ -62,3 +61,4 @@ export default async function handler(req, res) {
     });
   }
 }
+``
