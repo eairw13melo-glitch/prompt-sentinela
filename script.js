@@ -22,3 +22,16 @@ ${data.perguntas}
 
   document.getElementById("resultado").textContent = prompt;
 }
+
+function copiar() {
+  const texto = document.getElementById("resultado").textContent;
+
+  if (!texto) {
+    alert("Nada para copiar!");
+    return;
+  }
+
+  navigator.clipboard.writeText(texto)
+    .then(() => alert("✅ Prompt copiado!"))
+    .catch(() => alert("Erro ao copiar"));
+}
