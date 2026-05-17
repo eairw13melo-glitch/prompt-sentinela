@@ -9,16 +9,20 @@ export default async function handler(req, res) {
   }
 
   try {
-    // ✅ Proxy mais confiável
+    // ✅ Proxy estável
     const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(url);
 
-    const response = await axios.get(proxyUrl);
-    const html = response.data;
+    const response = await axios.get(proxyUrl, {
+      timeout: 15000
+    });
 
+    const html = response.data;
     const $ = cheerio.load(html);
 
+    // ✅ Título
     const titulo = $("h1").first().text().trim();
 
+    // ✅ Texto base
     let textoBase = "";
     $("p").each((i, el) => {
       const t = $(el).text();
@@ -28,6 +32,7 @@ export default async function handler(req, res) {
       }
     });
 
+    // ✅ Parágrafos (melhor lógica)
     let paragrafos = 0;
     $("p").each((i, el) => {
       const t = $(el).text().trim();
@@ -36,6 +41,7 @@ export default async function handler(req, res) {
       }
     });
 
+    // ✅ Perguntas
     let perguntas = "";
     $("p").each((i, el) => {
       const t = $(el).text().trim();
@@ -52,10 +58,10 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error(error);
+    console.error("ERRO REAL:", error.message);
 
     return res.status(500).json({
-      erro: "Erro real na API",
+      erro: "Erro ao buscar conteúdo",
       detalhe: error.message
     });
   }
