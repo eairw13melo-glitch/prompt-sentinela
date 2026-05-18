@@ -8,19 +8,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ erro: "URL não fornecida" });
   }
 
-  // Validação para aceitar apenas links do jw.org por enquanto
   if (!url.includes("jw.org")) {
     return res.status(400).json({ 
-      erro: "Por enquanto o Sentinela PRO só funciona com links do site jw.org" 
+      erro: "Por enquanto o Sentinela PRO só funciona com links do jw.org" 
     });
   }
 
   try {
-    // Proxy estável + cabeçalhos para evitar bloqueio
     const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(url);
 
     const response = await axios.get(proxyUrl, {
-      timeout: 15000,
+      timeout: 20000,
       headers: {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
       }
@@ -29,42 +27,36 @@ export default async function handler(req, res) {
     const html = response.data;
     const $ = cheerio.load(html);
 
-    // ==================== TÍTULO ====================
+    // Título
     let titulo = $("h1").first().text().trim();
     if (!titulo) {
       titulo = $("title").text().split("|")[0].trim() || "Estudo da Sentinela";
     }
 
-    // ==================== TEXTO BASE (citação inicial) ====================
+    // Texto base
     let textoBase = "";
     $("p").each((i, el) => {
       const t = $(el).text().trim();
-      if (t.includes("—") && (t.includes("“") || t.includes("*") || t.length > 80)) {
+      if (t.includes("—") && t.length > 60) {
         textoBase = t;
-        return false; // para no primeiro encontrado
+        return false;
       }
     });
 
-    // ==================== NÚMERO DE PARÁGRAFOS ====================
+    // Parágrafos
     let paragrafos = 0;
     $("strong, p strong, .bodyPara strong").each((i, el) => {
       const t = $(el).text().trim();
-      if (/^\d+(-\d+)?\.$/.test(t)) {
-        paragrafos++;
-      }
+      if (/^\d+(-\d+)?\.$/.test(t)) paragrafos++;
     });
-
-    // Fallback caso não encontre pelos strong
     if (paragrafos === 0) {
       $("p").each((i, el) => {
         const t = $(el).text().trim();
-        if (/^\d+\./.test(t)) {
-          paragrafos++;
-        }
+        if (/^\d+\./.test(t)) paragrafos++;
       });
     }
 
-    // ==================== PERGUNTAS DO ESTUDO ====================
+    // Perguntas
     let perguntas = "";
     $("strong, p strong, .bodyPara strong").each((i, el) => {
       const t = $(el).text().trim();
@@ -72,8 +64,6 @@ export default async function handler(req, res) {
         perguntas += "- " + t + "\n";
       }
     });
-
-    // Fallback caso não encontre perguntas nos strong
     if (!perguntas.trim()) {
       $("p").each((i, el) => {
         const t = $(el).text().trim();
@@ -91,7 +81,7 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error("ERRO REAL no extrair.js:", error.message);
+    console.error("ERRO NO EXTRAIR.JS:", error.message);
     return res.status(500).json({
       erro: "Erro ao buscar conteúdo do jw.org",
       detalhe: error.message
