@@ -103,6 +103,7 @@
                 <form id="edit-form" onsubmit="event.preventDefault();">
                     <div id="fields-paragraph-only">
                         <div class="form-row">
+
                             <div class="form-group flex-2">
                                 <label for="input-image-url">🖼️ Link da Imagem (JW.org):</label>
                                 <input type="url" id="input-image-url" placeholder="https://assets.jw.org/...">
@@ -131,26 +132,37 @@
                         
                         <div class="form-group">
                             <label for="input-resposta">2️⃣ RESPOSTA DIRETA (Comentário sintetizado para levantar a mão):</label>
-                            <textarea id="input-resposta" rows="3" maxlength="400"></textarea>
-                            <span id="char-counter" class="counter-text">0 / 400 caracteres</span>
+                            <textarea id="input-resposta" rows="3" maxlength="6000"></textarea>
+                            <span id="char-counter" class="counter-text">0 / 6000 caracteres</span>
                         </div>
                         
                         <div class="form-group">
                             <label for="input-pastoral">3️⃣ APLICAÇÃO PASTORAL PROFUNDA:</label>
                             <textarea id="input-pastoral" rows="4"></textarea>
                         </div>
+                            <!-- ... código anterior do card-header ... -->
+                            <form id="edit-form" onsubmit="event.preventDefault();">
+                                <div id="fields-paragraph-only">
+                                    <!-- NOVO CAMPO DE IDENTIFICAÇÃO ADICIONADO AQUI -->
+                                    <div class="form-group">
+                                        <label for="input-paragraph-key">✍️ IDENTIFICAÇÃO DO PARÁGRAFO (Permite conjunções):</label>
+                                        <input type="text" id="input-paragraph-key" placeholder="Ex: 1, 1 e 2, 5-7">
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group flex-2">
+                            <!-- ... restante do formulário continua igual ... -->                        
                     </div>
 
-                    <!-- Campo: Painel de Textos Rápidos -->
+                            <!-- Substitua os antigos campos de Bíblia por este bloco: -->
                     <div class="form-group">
-                        <label for="input-bible-refs">📖 TEXTOS BÍBLICOS DO PARÁGRAFO (Separe por vírgulas):</label>
-                        <input type="text" id="input-bible-refs" placeholder="Ex: Salmo 34:18, 2 Coríntios 12:9, Tiago 1:2">
-                    </div>
-
-                    <!-- NOVO CAMPO ADICIONADO ABAIXO -->
-                    <div class="form-group">
-                        <label for="input-bible-transcription">✍️ TRANSCRIÇÃO DA TNM DE ESTUDO (Opcional - Caso use um texto novo):</label>
-                        <textarea id="input-bible-transcription" rows="2" placeholder="Se colocou um texto novo acima, cole a transcrição fiel dele aqui..."></textarea>
+                        <label>📖 TEXTOS BÍBLICOS DO PARÁGRAFO:</label>
+                        <div id="dynamic-bible-fields-container">
+                            <!-- Os campos de texto serão gerados dinamicamente via JS -->
+                        </div>
+                        <button type="button" id="btn-add-bible-field" class="btn btn-secondary" style="margin-top: 8px; font-size: 0.85rem; padding: 6px 12px;">
+                            ➕ Adicionar Texto Bíblico
+                        </button>
                     </div>
 
                     <!-- Campos exclusivos da Recapitulação -->
