@@ -144,98 +144,41 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function showParagraph() {
-        viewMode.classList.remove("hidden");
-        editMode.classList.add("hidden");
-        const week = getActiveWeek();
-
-        if (activeParagraph === "recap") {
-            viewTitle.innerText = "📋 QUAL É A SUA RESPOSTA? (Recapitulação)";
-            viewImageContainer.classList.add("hidden");
-            viewLinkedBox.classList.add("hidden");
-            viewBibleContainer.classList.add("hidden");
-            
-            viewHtmlContent.innerHTML = `
-                <div class="view-section recap-group">
-                    <h3>➡️ ${week.recap.q1 || 'Pergunta 1'}</h3>
-                    <blockquote>"${week.recap.a1 || 'Sem notas anotadas...'}"</blockquote>
-                </div>
-                <div class="view-section recap-group">
-                    <h3>➡️ ${week.recap.q2 || 'Pergunta 2'}</h3>
-                    <blockquote>"${week.recap.a2 || 'Sem notas anotadas...'}"</blockquote>
-                </div>
-                <div class="view-section recap-group">
-                    <h3>➡️ ${week.recap.q3 || 'Pergunta 3'}</h3>
-                    <blockquote>"${week.recap.a3 || 'Sem notas anotadas...'}"</blockquote>
-                </div>
-            `;
-            return;
-        }
-
-        viewTitle.innerText = `Parágrafo ${activeParagraph}`;
-        if (!week.paragraphs[activeParagraph]) {
-            week.paragraphs[activeParagraph] = { imageUrl: "", imageComment: "", linkedParagraphs: "", bibleRefs: "", bibleTranscription: "", textual: "", resposta: "", pastoral: "" };
-        }
-        const pData = week.paragraphs[activeParagraph];
-
-        // Geração Exclusiva de Textos Bíblicos sem Pop-ups ou bloqueios
+// Geração Exclusiva de Textos Bíblicos - Correção de separação por vírgulas
         viewBibleBadges.innerHTML = "";
         if (pData.bibleRefs && pData.bibleRefs.trim() !== "") {
             viewBibleContainer.classList.remove("hidden");
-            pData.bibleRefs.split(",").forEach(ref => {
+
+            // Expressão regular inteligente para separar apenas referências bíblicas reais,
+            // evitando quebrar o texto do versículo caso o usuário cole o texto direto ali.
+            const refsArray = pData.bibleRefs.includes(":") 
+                ? pData.bibleRefs.split(/,(?=\s*[A-ZÁÉÍÓÚa-záéíóú0-9]+\s*\d+:)/) 
+                : pData.bibleRefs.split(",");
+
+            refsArray.forEach(ref => {
                 const trimmedRef = ref.trim();
                 if (!trimmedRef) return;
+                
                 const block = document.createElement("div");
                 block.className = "bible-text-display";
-                const txtBilia = fetchBibleText(trimmedRef, pData.bibleTranscription);
-                if (txtBilia) {
-                    block.innerHTML = `<strong>${trimmedRef}:</strong> "${txtBilia}"`;
+                
+                // Se a referência já contiver o texto completo (separado por hífen ou aspas)
+                if (trimmedRef.includes(" - ") || trimmedRef.includes(' "') || trimmedRef.includes(' “')) {
+                    block.innerHTML = `<strong>📖 Escritura citada:</strong> ${trimmedRef}`;
                 } else {
-                    block.innerHTML = `<strong>${trimmedRef}:</strong> <span style="color:#7f8c8d; font-style:italic;">Nenhuma transcrição salva para este texto...</span>`;
+                    // Caso contrário, busca no banco de dados ou na caixa de transcrição
+                    const txtBilia = fetchBibleText(trimmedRef, pData.bibleTranscription);
+                    if (txtBilia) {
+                        block.innerHTML = `<strong>${trimmedRef}:</strong> "${txtBilia}"`;
+                    } else {
+                        block.innerHTML = `<strong>${trimmedRef}:</strong> <span style="color:#7f8c8d; font-style:italic;">Nenhuma transcrição salva para este texto...</span>`;
+                    }
                 }
                 viewBibleBadges.appendChild(block);
             });
-        } else { viewBibleContainer.classList.add("hidden"); }
-
-        // Mídia de Imagem
-        if (pData.imageUrl && pData.imageUrl.trim() !== "") {
-            viewParagraphImg.src = pData.imageUrl.trim();
-            viewImageContainer.classList.remove("hidden");
-            if (pData.imageComment && pData.imageComment.trim() !== "") {
-                viewImageComment.innerText = pData.imageComment;
-                viewImageComment.classList.remove("hidden");
-            } else { viewImageComment.classList.add("hidden"); }
-        } else { viewImageContainer.classList.add("hidden"); }
-
-        // Parágrafos Relacionados
-        viewLinkedBadges.innerHTML = "";
-        if (pData.linkedParagraphs && pData.linkedParagraphs.trim() !== "") {
-            viewLinkedBox.classList.remove("hidden");
-            pData.linkedParagraphs.split(",").forEach(num => {
-                const cleanNum = num.trim(); if (!cleanNum) return;
-                const badge = document.createElement("span");
-                badge.className = "p-badge"; badge.innerText = `Parágrafo ${cleanNum}`;
-                badge.addEventListener("click", () => { activeParagraph = cleanNum; buildParagraphsMenu(); showParagraph(); });
-                viewLinkedBadges.appendChild(badge);
-            });
-        } else { viewLinkedBox.classList.add("hidden"); }
-
-        // Renderização estruturada de acordo com o padrão teocrático exigido
-        viewHtmlContent.innerHTML = `
-            <div class="view-section">
-                <h3>1️⃣ ANÁLISE TEXTUAL E EXEGÉTICA</h3>
-                <p>${pData.textual ? pData.textual.replace(/\n/g, '<br>') : 'Aguardando inserção de dados analíticos...'}</p>
-            </div>
-            <div class="view-section">
-                <h3>2️⃣ RESPOSTA DIRETA E EXEMPLO COMENTADO</h3>
-                <blockquote>"${pData.resposta || 'Aguardando comentário objetivo para a reunião...'}"</blockquote>
-            </div>
-            <div class="view-section">
-                <h3>3️⃣ APLICAÇÃO PASTORAL PROFUNDA</h3>
-                <p>${pData.pastoral ? pData.pastoral.replace(/\n/g, '<br>') : 'Aguardando aplicação prática e espiritual...'}</p>
-            </div>
-        `;
-    }
+        } else { 
+            viewBibleContainer.classList.add("hidden"); 
+        }
 
     btnEditMode.addEventListener("click", () => {
         const week = getActiveWeek();
