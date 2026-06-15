@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador Supremo da Sentinela com Links Bíblicos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Menu Lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Sentinela</h2>
+                <p>Estudo Semanal Teocrático</p>
+            </div>
+            
+            <!-- Busca Integrada -->
+            <div class="search-box">
+                <input type="text" id="input-search" placeholder="🔍 Buscar nas notas...">
+            </div>
+            
+            <!-- Controle de Semanas -->
+            <div class="weeks-manager">
+                <label for="select-week">Selecione a Semana:</label>
+                <select id="select-week">
+                    <!-- Gerado Dinamicamente -->
+                </select>
+                <div class="week-actions">
+                    <button id="btn-add-week" class="btn-action">➕ Nova Semana</button>
+                    <button id="btn-del-week" class="btn-action btn-action-danger">🗑️ Apagar</button>
+                </div>
+            </div>
+
+            <!-- Controle de Parágrafos da Semana -->
+            <div class="paragraphs-count-control">
+                <span>Parágrafos:</span>
+                <button id="btn-remove-p" class="btn-p-step">−</button>
+                <span id="label-total-p">0</span>
+                <button id="btn-add-p" class="btn-p-step">＋</button>
+            </div>
+            
+            <!-- Links dos Parágrafos -->
+            <nav class="sidebar-menu">
+                <ul id="paragraph-list">
+                    <!-- Gerado dinamicamente -->
+                </ul>
+                <ul class="special-menu">
+                    <li><a href="#" class="nav-link special-link" id="link-recap">📋 Recapitulação Final</a></li>
+                </ul>
+            </nav>
+
+            <!-- Ações de Backup Geral -->
+            <div class="backup-zone">
+                <button id="btn-export" class="btn btn-secondary">📥 Exportar BKP</button>
+                <button id="btn-import" class="btn btn-secondary">📤 Importar BKP</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+            </div>
+        </aside>
+
+        <!-- Área de Conteúdo Principal -->
+        <main class="content-area">
+            <!-- 1. MODO DE VISUALIZAÇÃO -->
+            <article id="view-mode" class="content-card">
+                <div class="card-header">
+                    <h2 id="view-title">Parágrafo X</h2>
+                    <button id="btn-edit-mode" class="btn btn-primary">✏️ Editar Conteúdo</button>
+                </div>
+                
+                <!-- Painel de Referências Bíblicas Rápidas -->
+                <div id="view-bible-container" class="bible-references-box hidden">
+                    <span class="bible-label">📖 Textos Bíblicos deste Parágrafo:</span>
+                    <div id="view-bible-badges"></div>
+                </div>
+
+                <!-- Imagem e seu Comentário Exclusivo -->
+                <div id="view-image-container" class="paragraph-image-box hidden">
+                    <img id="view-paragraph-img" src="" alt="Ilustração do parágrafo">
+                    <div id="view-image-comment" class="image-comment-text"></div>
+                </div>
+
+                <!-- Tags de Parágrafos Vinculados -->
+                <div id="view-linked-box" class="linked-badge-container hidden">
+                    <span class="linked-label">🔗 Parágrafos Relacionados:</span>
+                    <div id="view-linked-badges"></div>
+                </div>
+
+                <div id="view-html-content">
+                    <!-- Conteúdo dinâmico -->
+                </div>
+            </article>
+
+            <!-- 2. MODO DE EDIÇÃO (FORMULÁRIO) -->
+            <article id="edit-mode" class="content-card hidden">
+                <div class="card-header">
+                    <h2>Editando <span id="edit-paragraph-num">X</span></h2>
+                    <div class="header-buttons">
+                        <button id="btn-save" class="btn btn-success">💾 Salvar</button>
+                        <button id="btn-cancel" class="btn btn-danger">❌ Cancelar</button>
+                    </div>
+                </div>
+                
+                <form id="edit-form" onsubmit="event.preventDefault();">
+                    <div id="fields-paragraph-only">
+                        <div class="form-row">
+                            <div class="form-group flex-2">
+                                <label for="input-image-url">🖼️ Link da Imagem (JW.org):</label>
+                                <input type="url" id="input-image-url" placeholder="https://assets.jw.org/...">
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="input-linked-p">🔗 Vincular a outro Parágrafo:</label>
+                                <input type="text" id="input-linked-p" placeholder="Ex: 3, 5, 12">
+                            </div>
+                        </div>
+
+                        <!-- Campo: Painel de Textos Rápidos -->
+                        <div class="form-group">
+                            <label for="input-bible-refs">📖 TEXTOS BÍBLICOS DO PARÁGRAFO (Separe por vírgulas):</label>
+                            <input type="text" id="input-bible-refs" placeholder="Ex: Salmo 34:18, 2 Corintios 12:9, Tiago 1:2">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-image-comment">💬 COMENTÁRIO EXCLUSIVO DA IMAGEM / ILUSTRAÇÃO:</label>
+                            <textarea id="input-image-comment" rows="2" placeholder="O que responder sobre esta imagem específica?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-textual">1️⃣ ANÁLISE TEXTUAL E EXEGÉTICA (Notas dos links bíblicos):</label>
+                            <textarea id="input-textual" rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-resposta">2️⃣ RESPOSTA DIRETA (Comentário sintetizado para levantar a mão):</label>
+                            <textarea id="input-resposta" rows="3" maxlength="400"></textarea>
+                            <span id="char-counter" class="counter-text">0 / 400 caracteres</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="input-pastoral">3️⃣ APLICAÇÃO PASTORAL PROFUNDA:</label>
+                            <textarea id="input-pastoral" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Painel de Textos Rápidos -->
+                    <div class="form-group">
+                        <label for="input-bible-refs">📖 TEXTOS BÍBLICOS DO PARÁGRAFO (Separe por vírgulas):</label>
+                        <input type="text" id="input-bible-refs" placeholder="Ex: Salmo 34:18, 2 Coríntios 12:9, Tiago 1:2">
+                    </div>
+
+                    <!-- NOVO CAMPO ADICIONADO ABAIXO -->
+                    <div class="form-group">
+                        <label for="input-bible-transcription">✍️ TRANSCRIÇÃO DA TNM DE ESTUDO (Opcional - Caso use um texto novo):</label>
+                        <textarea id="input-bible-transcription" rows="2" placeholder="Se colocou um texto novo acima, cole a transcrição fiel dele aqui..."></textarea>
+                    </div>
+
+                    <!-- Campos exclusivos da Recapitulação -->
+                    <div id="fields-recap-only" class="hidden">
+                        <div class="form-group recap-group">
+                            <label>❓ PERGUNTA DE RECAPITULAÇÃO 1:</label>
+                            <input type="text" id="recap-q1" placeholder="Digite a pergunta de recapitulação 1">
+                            <textarea id="recap-a1" rows="3" placeholder="Sua resposta condensada para a pergunta 1..."></textarea>
+                        </div>
+                        <div class="form-group recap-group">
+                            <label>❓ PERGUNTA DE RECAPITULAÇÃO 2:</label>
+                            <input type="text" id="recap-q2" placeholder="Digite a pergunta de recapitulação 2">
+                            <textarea id="recap-a2" rows="3" placeholder="Sua resposta condensada para a pergunta 2..."></textarea>
+                        </div>
+                        <div class="form-group recap-group">
+                            <label>❓ PERGUNTA DE RECAPITULAÇÃO 3:</label>
+                            <input type="text" id="recap-q3" placeholder="Digite a pergunta de recapitulação 3">
+                            <textarea id="recap-a3" rows="3" placeholder="Sua resposta condensada para a pergunta 3..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </article>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
