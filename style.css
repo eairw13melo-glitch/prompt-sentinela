@@ -124,7 +124,7 @@ textarea { width: 100%; background-color: var(--input-bg); border: 1px solid var
 /* Container de Leitura da Bíblia Integrada */
 .bible-text-display {
     background-color: #f4f6f9;
-    border-left: 4px solid #4a148c; /* Roxo Teocrático */
+    border-left: 4px solid #4a148c;
     padding: 12px 16px;
     margin-top: 10px;
     border-radius: 0 8px 8px 0;
@@ -222,11 +222,90 @@ textarea { width: 100%; background-color: var(--input-bg); border: 1px solid var
     }
     
     .content-area {
-        padding: 70px 15px 15px 15px;
+        padding: 70px 15px 15px 15px !important;
+        overflow-y: auto !important;
+        min-height: 100vh;
     }
     
     .content-card {
-        padding: 20px;
+        padding: 20px 15px !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
+    
+    /* Esconder botão de editar no mobile */
+    #btn-edit-mode {
+        display: none !important;
+    }
+    
+    /* Garantir que o conteúdo seja visível */
+    .view-section {
+        margin-bottom: 20px !important;
+        display: block !important;
+    }
+    
+    .view-section h3 {
+        font-size: 1rem !important;
+        margin-bottom: 10px !important;
+        display: block !important;
+    }
+    
+    .view-section p {
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        display: block !important;
+        color: #e0e0e0 !important;
+    }
+    
+    /* Bloco da revista - garantir visibilidade no mobile */
+    .view-section > div[style*="background-color: #f4f1ea"],
+    .view-section > div[style*="background-color: #2d2d2d"] {
+        background-color: #2d2d2d !important;
+        border-left: 5px solid #ffd54f !important;
+        padding: 12px !important;
+        border-radius: 6px !important;
+        margin-bottom: 15px !important;
+        display: block !important;
+    }
+    
+    /* Resposta direta - destacar no mobile */
+    .view-section > div[style*="background-color: #e8f0fe"] {
+        background-color: #1a237e !important;
+        border-left: 5px solid #536dfe !important;
+        padding: 12px !important;
+        border-radius: 4px !important;
+        margin-top: 10px !important;
+        display: block !important;
+    }
+    
+    /* Ajustar título do parágrafo */
+    .card-header h2, #view-title {
+        font-size: 1.2rem !important;
+        margin-bottom: 15px !important;
+        display: block !important;
+    }
+    
+    /* Botão voltar - ajustar */
+    #btn-leitura-voltar {
+        font-size: 0.85rem !important;
+        padding: 8px 12px !important;
+        margin-bottom: 12px !important;
+        display: inline-block !important;
+    }
+    
+    /* Imagens responsivas */
+    .paragraph-image-box img {
+        max-height: 200px !important;
+        width: 100% !important;
+        object-fit: contain !important;
+    }
+    
+    /* Textos bíblicos */
+    .bible-text-display {
+        font-size: 0.85rem !important;
+        padding: 10px !important;
+        margin-top: 8px !important;
+        display: block !important;
     }
     
     /* Ajustar formulários para mobile */
@@ -250,7 +329,22 @@ textarea { width: 100%; background-color: var(--input-bg); border: 1px solid var
     
     /* Melhorar legibilidade em telas pequenas */
     textarea, input[type="text"], input[type="url"] {
-        font-size: 16px; /* Previne zoom no iOS */
+        font-size: 16px;
+    }
+    
+    /* Ajustar recapitulação no mobile */
+    .recap-group {
+        padding: 12px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .recap-group h3 {
+        font-size: 0.95rem !important;
+    }
+    
+    .recap-group div {
+        font-size: 0.9rem !important;
+        padding: 10px !important;
     }
 }
 
