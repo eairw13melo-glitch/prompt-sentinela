@@ -178,19 +178,65 @@ if (parentResposta) {
         txtElement.addEventListener("input", () => ajustarAlturaTextArea(txtElement));
     });
 
-    // Botão Voltar na Sidebar
-    const sidebarContainer = document.querySelector(".sidebar") || document.querySelector("aside");
-    if (sidebarContainer && !document.getElementById("btn-sidebar-back")) {
-        const btnBackSidebar = document.createElement("button");
-        btnBackSidebar.id = "btn-sidebar-back";
-        btnBackSidebar.innerHTML = "⬅️ Voltar para os Estudos";
-        btnBackSidebar.style.cssText = "width: 90%; margin: 10px auto; padding: 10px; background: #2c2c3e; color: #ff5b5b; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-weight: bold; display: block;";
-        btnBackSidebar.addEventListener("click", () => {
-            isCoverActive = true;
-            showParagraph();
-        });
-        sidebarContainer.insertBefore(btnBackSidebar, sidebarContainer.firstChild);
+// BOTÃO MENU HAMBURGUER (DEVE VIR ANTES DO BOTÃO VOLTAR)
+const menuToggle = document.createElement("button");
+menuToggle.className = "menu-toggle";
+menuToggle.innerHTML = "☰";
+menuToggle.setAttribute("aria-label", "Abrir menu");
+menuToggle.addEventListener("click", () => {
+    if (sidebarContainer) {
+        sidebarContainer.classList.add("mobile-open");
+        // Criar overlay se não existir
+        let overlay = document.querySelector(".sidebar-overlay");
+        if (!overlay) {
+            overlay = document.createElement("div");
+            overlay.className = "sidebar-overlay";
+            overlay.addEventListener("click", () => {
+                sidebarContainer.classList.remove("mobile-open");
+                overlay.classList.remove("active");
+            });
+            document.body.appendChild(overlay);
+        }
+        setTimeout(() => overlay.classList.add("active"), 10);
     }
+});
+document.body.insertBefore(menuToggle, document.body.firstChild);
+
+// BOTÃO VOLTAR NA SIDEBAR (com suporte a mobile)
+const sidebarContainer = document.querySelector(".sidebar") || document.querySelector("aside");
+if (sidebarContainer && !document.getElementById("btn-sidebar-back")) {
+    const btnBackSidebar = document.createElement("button");
+    btnBackSidebar.id = "btn-sidebar-back";
+    btnBackSidebar.innerHTML = "⬅️ Voltar para os Estudos";
+    btnBackSidebar.style.cssText = "width: 90%; margin: 10px auto; padding: 10px; background: #2c2c3e; color: #ff5b5b; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-weight: bold; display: block;";
+    
+    btnBackSidebar.addEventListener("click", () => {
+        isCoverActive = true;
+        
+        // 🆕 Fechar sidebar no mobile ao voltar
+        if (window.innerWidth <= 768 && sidebarContainer) {
+            sidebarContainer.classList.remove("mobile-open");
+            const overlay = document.querySelector(".sidebar-overlay");
+            if (overlay) overlay.classList.remove("active");
+        }
+        
+        showParagraph();
+    });
+    
+    sidebarContainer.insertBefore(btnBackSidebar, sidebarContainer.firstChild);
+}
+
+// 🆕 Fechar sidebar ao clicar em um parágrafo (mobile)
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".nav-link") && window.innerWidth <= 768) {
+        setTimeout(() => {
+            const sidebar = document.querySelector(".sidebar");
+            if (sidebar) sidebar.classList.remove("mobile-open");
+            const overlay = document.querySelector(".sidebar-overlay");
+            if (overlay) overlay.classList.remove("active");
+        }, 300);
+    }
+});
 
     const btnEditMode = document.getElementById("btn-edit-mode");
     const btnSave = document.getElementById("btn-save");
@@ -337,10 +383,16 @@ if (parentResposta) {
         });
     }
 
-    function showParagraph() {
-        const week = getActiveWeek();
-        checkRecapStructure(week);
-        const sidebar = document.querySelector(".sidebar") || document.querySelector("aside");
+   btnVoltarTopo.addEventListener("click", () => {
+    isCoverActive = true;
+    // Fechar sidebar no mobile
+    if (sidebar) {
+        sidebar.classList.remove("mobile-open");
+        const overlay = document.querySelector(".sidebar-overlay");
+        if (overlay) overlay.classList.remove("active");
+    }
+    showParagraph();
+});
 
         // PAINEL INICIAL: MURAL DE BANNERS
         if (isCoverActive) {
