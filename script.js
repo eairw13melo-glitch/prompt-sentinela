@@ -548,10 +548,10 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
 
         const restOfContent = document.createElement("div");
         let blocoRevistaHtml = pData.revistaTexto && pData.revistaTexto.trim() !== "" ? `
-            <div style="background-color: #f4f1ea; border-left: 5px solid #4a2e56; padding: 14px; border-radius: 6px; margin-bottom: 18px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
-                <span style="font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #4a2e56; display:block; margin-bottom: 6px; letter-spacing: 0.5px;">Trecho Original da Revista:</span>
-                <p style="margin:0; font-weight: 500; color: #1c1c1c !important; line-height: 1.6; font-size: 1rem;">${pData.revistaTexto ? parseMarkdown(pData.revistaTexto).replace(/\n/g, '<br>') : ''}</p>
-            </div>
+        <div style="background-color: #2d2d2d; border-left: 5px solid #ffd54f; padding: 14px; border-radius: 6px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+            <span style="font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #ffd54f; display:block; margin-bottom: 6px; letter-spacing: 0.5px;">Trecho Original da Revista:</span>
+            <p style="margin:0; font-weight: 400; color: #e0e0e0 !important; line-height: 1.6; font-size: 1rem;">${pData.revistaTexto ? parseMarkdown(pData.revistaTexto).replace(/\n/g, '<br>') : ''}</p>
+        </div>
         ` : "";
         restOfContent.innerHTML = `
             <div class="view-section" style="margin-top: 20px;">
