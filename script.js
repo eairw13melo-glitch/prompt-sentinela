@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         antigoInputLinked.remove();
     }
 
-const parentResposta = inputResposta.parentElement;
+    const parentResposta = inputResposta.parentElement;
 if (parentResposta) {
     const containerFlex  = document.createElement("div");
     containerFlex.style.cssText = "display: flex; gap: 20px; width: 100%; margin-bottom: 15px;";
@@ -126,33 +126,6 @@ if (parentResposta) {
     
     const labelResp = parentResposta.querySelector('label[for="input-resposta"]');
     if(labelResp) colunaEsquerda.appendChild(labelResp);
-
-    // --- NOVO: Botão para destacar a resposta correta ---
-    const btnHighlight = document.createElement("button");
-    btnHighlight.type = "button";
-    btnHighlight.innerText = "✨ Destacar Resposta Correta";
-    btnHighlight.style.cssText = "background: #ffff00; color: #0000ff; border: 1px solid #0000ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; display: block; transition: 0.2s;";
-    btnHighlight.addEventListener("mouseover", () => btnHighlight.style.background = "#e6e600");
-    btnHighlight.addEventListener("mouseout", () => btnHighlight.style.background = "#ffff00");
-    
-    btnHighlight.addEventListener("click", () => {
-        const start = inputResposta.selectionStart;
-        const end = inputResposta.selectionEnd;
-        const selectedText = inputResposta.value.substring(start, end);
-        
-        if (selectedText) {
-            const replacement = `#${selectedText}#`;
-            inputResposta.value = inputResposta.value.substring(0, start) + replacement + inputResposta.value.substring(end);
-            inputResposta.focus();
-            inputResposta.setSelectionRange(start + 1, start + 1 + selectedText.length);
-            ajustarAlturaTextArea(inputResposta);
-        } else {
-            alert("⚠️ Selecione o texto dentro da caixa de 'Resposta Direta' primeiro!");
-        }
-    });
-    colunaEsquerda.appendChild(btnHighlight);
-    // ----------------------------------------------------
-
     colunaEsquerda.appendChild(inputResposta);
     colunaEsquerda.appendChild(charCounter);
     
@@ -160,12 +133,38 @@ if (parentResposta) {
     labelRevista.innerText = "Texto Original da Revista (Parágrafo):";
     labelRevista.style.cssText = "font-weight: bold; display: block; margin-bottom: 5px;";
     
+    // === BOTÃO DE DESTAQUE PARA TEXTO DA REVISTA ===
+    const btnHighlightRevista = document.createElement("button");
+    btnHighlightRevista.type = "button";
+    btnHighlightRevista.innerText = "✨ Marcar Resposta Correta";
+    btnHighlightRevista.style.cssText = "background: #ffff00; color: #0000ff; border: 2px solid #0000ff; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; display: block; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3);";
+    btnHighlightRevista.addEventListener("mouseover", () => btnHighlightRevista.style.background = "#e6e600");
+    btnHighlightRevista.addEventListener("mouseout", () => btnHighlightRevista.style.background = "#ffff00");
+    
+    btnHighlightRevista.addEventListener("click", () => {
+        const start = inputRevistaTexto.selectionStart;
+        const end = inputRevistaTexto.selectionEnd;
+        const selectedText = inputRevistaTexto.value.substring(start, end);
+        
+        if (selectedText) {
+            const replacement = `#${selectedText}#`;
+            inputRevistaTexto.value = inputRevistaTexto.value.substring(0, start) + replacement + inputRevistaTexto.value.substring(end);
+            inputRevistaTexto.focus();
+            inputRevistaTexto.setSelectionRange(start + 1, start + 1 + selectedText.length);
+            ajustarAlturaTextArea(inputRevistaTexto);
+        } else {
+            alert("⚠️ Selecione o texto dentro da caixa 'Texto Original da Revista' primeiro!");
+        }
+    });
+    // ================================================
+    
     colunaDireita.appendChild(labelRevista);
+    colunaDireita.appendChild(btnHighlightRevista); // Adiciona o botão antes do textarea
     colunaDireita.appendChild(inputRevistaTexto);
 
     containerFlex.appendChild(colunaEsquerda);
     containerFlex.appendChild(colunaDireita);
-}
+    }
 
     // Função auxiliar para expandir Textareas de forma responsiva ao digitar ou carregar
     function ajustarAlturaTextArea(textareaElement) {
@@ -209,12 +208,9 @@ if (parentResposta) {
     }
 
     // MINI PARSER MARKDOWN
-   function parseMarkdown(text) {
-    if (!text) return " ";
-    // Converte #texto# em <span class="com1">texto</span>
-    text = text.replace(/#(.*?)#/g, '<span class="com1">$1</span>');
-    // Converte *texto* em <strong>texto</strong>
-    return text.replace(/\*(.*?)\*/g, " <strong >$1 </strong > ");
+    function parseMarkdown(text) {
+        if (!text) return "";
+        return text.replace(/\*(.*?)\*/g, "<strong>$1</strong>");
     }
 
     // CAPTURA AUTOMÁTICA DE VERSÍCULOS BÍBLICOS
@@ -554,7 +550,7 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
         let blocoRevistaHtml = pData.revistaTexto && pData.revistaTexto.trim() !== "" ? `
             <div style="background-color: #f4f1ea; border-left: 5px solid #4a2e56; padding: 14px; border-radius: 6px; margin-bottom: 18px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);">
                 <span style="font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #4a2e56; display:block; margin-bottom: 6px; letter-spacing: 0.5px;">Trecho Original da Revista:</span>
-                <p style="margin:0; font-weight: 500; color: #1c1c1c !important; line-height: 1.6; font-size: 1rem;">${pData.revistaTexto.replace(/\n/g, '<br>')}</p>
+                <p style="margin:0; font-weight: 500; color: #1c1c1c !important; line-height: 1.6; font-size: 1rem;">${pData.revistaTexto ? parseMarkdown(pData.revistaTexto).replace(/\n/g, '<br>') : ''}</p>
             </div>
         ` : "";
         restOfContent.innerHTML = `
