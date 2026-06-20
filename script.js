@@ -112,33 +112,60 @@ document.addEventListener("DOMContentLoaded", () => {
         antigoInputLinked.remove();
     }
 
-    const parentResposta = inputResposta.parentElement;
-    if (parentResposta) {
-        const containerFlex = document.createElement("div");
-        containerFlex.style.cssText = "display: flex; gap: 20px; width: 100%; margin-bottom: 15px;";
+const parentResposta = inputResposta.parentElement;
+if (parentResposta) {
+    const containerFlex  = document.createElement("div");
+    containerFlex.style.cssText = "display: flex; gap: 20px; width: 100%; margin-bottom: 15px;";
 
-        const colunaEsquerda = document.createElement("div");
-        colunaEsquerda.style.flex = "1";
-        const colunaDireita = document.createElement("div");
-        colunaDireita.style.flex = "1";
+    const colunaEsquerda = document.createElement("div");
+    colunaEsquerda.style.flex = "1";
+    const colunaDireita = document.createElement("div");
+    colunaDireita.style.flex = "1";
 
-        parentResposta.insertBefore(containerFlex, inputResposta);
-        
-        const labelResp = parentResposta.querySelector('label[for="input-resposta"]');
-        if(labelResp) colunaEsquerda.appendChild(labelResp);
-        colunaEsquerda.appendChild(inputResposta);
-        colunaEsquerda.appendChild(charCounter);
-        
-        const labelRevista = document.createElement("label");
-        labelRevista.innerText = "Texto Original da Revista (Parágrafo):";
-        labelRevista.style.cssText = "font-weight: bold; display: block; margin-bottom: 5px;";
-        
-        colunaDireita.appendChild(labelRevista);
-        colunaDireita.appendChild(inputRevistaTexto);
+    parentResposta.insertBefore(containerFlex, inputResposta);
+    
+    const labelResp = parentResposta.querySelector('label[for="input-resposta"]');
+    if(labelResp) colunaEsquerda.appendChild(labelResp);
 
-        containerFlex.appendChild(colunaEsquerda);
-        containerFlex.appendChild(colunaDireita);
-    }
+    // --- NOVO: Botão para destacar a resposta correta ---
+    const btnHighlight = document.createElement("button");
+    btnHighlight.type = "button";
+    btnHighlight.innerText = "✨ Destacar Resposta Correta";
+    btnHighlight.style.cssText = "background: #ffff00; color: #0000ff; border: 1px solid #0000ff; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; display: block; transition: 0.2s;";
+    btnHighlight.addEventListener("mouseover", () => btnHighlight.style.background = "#e6e600");
+    btnHighlight.addEventListener("mouseout", () => btnHighlight.style.background = "#ffff00");
+    
+    btnHighlight.addEventListener("click", () => {
+        const start = inputResposta.selectionStart;
+        const end = inputResposta.selectionEnd;
+        const selectedText = inputResposta.value.substring(start, end);
+        
+        if (selectedText) {
+            const replacement = `#${selectedText}#`;
+            inputResposta.value = inputResposta.value.substring(0, start) + replacement + inputResposta.value.substring(end);
+            inputResposta.focus();
+            inputResposta.setSelectionRange(start + 1, start + 1 + selectedText.length);
+            ajustarAlturaTextArea(inputResposta);
+        } else {
+            alert("⚠️ Selecione o texto dentro da caixa de 'Resposta Direta' primeiro!");
+        }
+    });
+    colunaEsquerda.appendChild(btnHighlight);
+    // ----------------------------------------------------
+
+    colunaEsquerda.appendChild(inputResposta);
+    colunaEsquerda.appendChild(charCounter);
+    
+    const labelRevista = document.createElement("label");
+    labelRevista.innerText = "Texto Original da Revista (Parágrafo):";
+    labelRevista.style.cssText = "font-weight: bold; display: block; margin-bottom: 5px;";
+    
+    colunaDireita.appendChild(labelRevista);
+    colunaDireita.appendChild(inputRevistaTexto);
+
+    containerFlex.appendChild(colunaEsquerda);
+    containerFlex.appendChild(colunaDireita);
+}
 
     // Função auxiliar para expandir Textareas de forma responsiva ao digitar ou carregar
     function ajustarAlturaTextArea(textareaElement) {
@@ -182,9 +209,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // MINI PARSER MARKDOWN
-    function parseMarkdown(text) {
-        if (!text) return "";
-        return text.replace(/\*(.*?)\*/g, "<strong>$1</strong>");
+   function parseMarkdown(text) {
+    if (!text) return " ";
+    // Converte #texto# em <span class="com1">texto</span>
+    text = text.replace(/#(.*?)#/g, '<span class="com1">$1</span>');
+    // Converte *texto* em <strong>texto</strong>
+    return text.replace(/\*(.*?)\*/g, " <strong >$1 </strong > ");
     }
 
     // CAPTURA AUTOMÁTICA DE VERSÍCULOS BÍBLICOS
