@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
         weeks: {
             "semana_8_junho": {
                 id: "semana_8_junho",
-                title: "8-14 DE JUNHO DE 2026 | O “Deus da verdade” sempre cumpre o que promete",
+                title: "8-14 DE JUNHO DE 2026 | O "Deus da verdade" sempre cumpre o que promete",
                 textoBiblicoSemana: '"O teu parecer é o que me guia... Prepara o teu coração para assimilar as joias espirituais da lição desta semana."',
                 imageUrlCapa: "https://cms-imgp.jw-cdn.org/img/p/1011202/univ/art/1011202_univ_lsr_lg.jpg",
                 totalParagraphs: 16,
                 recap: {
-                    q1: "Por que podemos confiar no “Deus da verdade”?", a1: "",
+                    q1: "Por que podemos confiar no "Deus da verdade"?", a1: "",
                     q2: "Como Jeová vai acabar com o mundo mau de Satanás e o que Ele está fazendo agora para cumprir seu propósito?", a2: "",
                     q3: "Por que temos certeza que nada pode impedir Jeová de agir?", a3: ""
                 },
@@ -113,57 +113,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const parentResposta = inputResposta.parentElement;
-if (parentResposta) {
-    const containerFlex  = document.createElement("div");
-    containerFlex.style.cssText = "display: flex; gap: 20px; width: 100%; margin-bottom: 15px;";
+    if (parentResposta) {
+        const containerFlex = document.createElement("div");
+        containerFlex.style.cssText = "display: flex; gap: 20px; width: 100%; margin-bottom: 15px;";
 
-    const colunaEsquerda = document.createElement("div");
-    colunaEsquerda.style.flex = "1";
-    const colunaDireita = document.createElement("div");
-    colunaDireita.style.flex = "1";
+        const colunaEsquerda = document.createElement("div");
+        colunaEsquerda.style.flex = "1";
+        const colunaDireita = document.createElement("div");
+        colunaDireita.style.flex = "1";
 
-    parentResposta.insertBefore(containerFlex, inputResposta);
-    
-    const labelResp = parentResposta.querySelector('label[for="input-resposta"]');
-    if(labelResp) colunaEsquerda.appendChild(labelResp);
-    colunaEsquerda.appendChild(inputResposta);
-    colunaEsquerda.appendChild(charCounter);
-    
-    const labelRevista = document.createElement("label");
-    labelRevista.innerText = "Texto Original da Revista (Parágrafo):";
-    labelRevista.style.cssText = "font-weight: bold; display: block; margin-bottom: 5px;";
-    
-    // === BOTÃO DE DESTAQUE PARA TEXTO DA REVISTA ===
-    const btnHighlightRevista = document.createElement("button");
-    btnHighlightRevista.type = "button";
-    btnHighlightRevista.innerText = "✨ Marcar Resposta Correta";
-    btnHighlightRevista.style.cssText = "background: #ffff00; color: #0000ff; border: 2px solid #0000ff; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; display: block; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3);";
-    btnHighlightRevista.addEventListener("mouseover", () => btnHighlightRevista.style.background = "#e6e600");
-    btnHighlightRevista.addEventListener("mouseout", () => btnHighlightRevista.style.background = "#ffff00");
-    
-    btnHighlightRevista.addEventListener("click", () => {
-        const start = inputRevistaTexto.selectionStart;
-        const end = inputRevistaTexto.selectionEnd;
-        const selectedText = inputRevistaTexto.value.substring(start, end);
+        parentResposta.insertBefore(containerFlex, inputResposta);
         
-        if (selectedText) {
-            const replacement = `#${selectedText}#`;
-            inputRevistaTexto.value = inputRevistaTexto.value.substring(0, start) + replacement + inputRevistaTexto.value.substring(end);
-            inputRevistaTexto.focus();
-            inputRevistaTexto.setSelectionRange(start + 1, start + 1 + selectedText.length);
-            ajustarAlturaTextArea(inputRevistaTexto);
-        } else {
-            alert("⚠️ Selecione o texto dentro da caixa 'Texto Original da Revista' primeiro!");
-        }
-    });
-    // ================================================
-    
-    colunaDireita.appendChild(labelRevista);
-    colunaDireita.appendChild(btnHighlightRevista); // Adiciona o botão antes do textarea
-    colunaDireita.appendChild(inputRevistaTexto);
+        const labelResp = parentResposta.querySelector('label[for="input-resposta"]');
+        if(labelResp) colunaEsquerda.appendChild(labelResp);
+        colunaEsquerda.appendChild(inputResposta);
+        colunaEsquerda.appendChild(charCounter);
+        
+        const labelRevista = document.createElement("label");
+        labelRevista.innerText = "Texto Original da Revista (Parágrafo):";
+        labelRevista.style.cssText = "font-weight: bold; display: block; margin-bottom: 5px;";
+        
+        // === BOTÃO DE DESTAQUE PARA TEXTO DA REVISTA ===
+        const btnHighlightRevista = document.createElement("button");
+        btnHighlightRevista.type = "button";
+        btnHighlightRevista.innerText = "✨ Marcar Resposta Correta";
+        btnHighlightRevista.style.cssText = "background: #ffff00; color: #0000ff; border: 2px solid #0000ff; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; margin-bottom: 8px; display: block; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3);";
+        btnHighlightRevista.addEventListener("mouseover", () => btnHighlightRevista.style.background = "#e6e600");
+        btnHighlightRevista.addEventListener("mouseout", () => btnHighlightRevista.style.background = "#ffff00");
+        
+        btnHighlightRevista.addEventListener("click", () => {
+            const start = inputRevistaTexto.selectionStart;
+            const end = inputRevistaTexto.selectionEnd;
+            const selectedText = inputRevistaTexto.value.substring(start, end);
+            
+            if (selectedText) {
+                const replacement = `#${selectedText}#`;
+                inputRevistaTexto.value = inputRevistaTexto.value.substring(0, start) + replacement + inputRevistaTexto.value.substring(end);
+                inputRevistaTexto.focus();
+                inputRevistaTexto.setSelectionRange(start + 1, start + 1 + selectedText.length);
+                ajustarAlturaTextArea(inputRevistaTexto);
+            } else {
+                alert("⚠️ Selecione o texto dentro da caixa 'Texto Original da Revista' primeiro!");
+            }
+        });
+        // ================================================
+        
+        colunaDireita.appendChild(labelRevista);
+        colunaDireita.appendChild(btnHighlightRevista);
+        colunaDireita.appendChild(inputRevistaTexto);
 
-    containerFlex.appendChild(colunaEsquerda);
-    containerFlex.appendChild(colunaDireita);
+        containerFlex.appendChild(colunaEsquerda);
+        containerFlex.appendChild(colunaDireita);
     }
 
     // Função auxiliar para expandir Textareas de forma responsiva ao digitar ou carregar
@@ -178,65 +178,63 @@ if (parentResposta) {
         txtElement.addEventListener("input", () => ajustarAlturaTextArea(txtElement));
     });
 
-// BOTÃO MENU HAMBURGUER (DEVE VIR ANTES DO BOTÃO VOLTAR)
-const menuToggle = document.createElement("button");
-menuToggle.className = "menu-toggle";
-menuToggle.innerHTML = "☰";
-menuToggle.setAttribute("aria-label", "Abrir menu");
-menuToggle.addEventListener("click", () => {
-    if (sidebarContainer) {
-        sidebarContainer.classList.add("mobile-open");
-        // Criar overlay se não existir
-        let overlay = document.querySelector(".sidebar-overlay");
-        if (!overlay) {
-            overlay = document.createElement("div");
-            overlay.className = "sidebar-overlay";
-            overlay.addEventListener("click", () => {
-                sidebarContainer.classList.remove("mobile-open");
-                overlay.classList.remove("active");
-            });
-            document.body.appendChild(overlay);
-        }
-        setTimeout(() => overlay.classList.add("active"), 10);
-    }
-});
-document.body.insertBefore(menuToggle, document.body.firstChild);
+    // SIDEBAR CONTAINER (declarado antes de ser usado)
+    const sidebarContainer = document.querySelector(".sidebar") || document.querySelector("aside");
 
-// BOTÃO VOLTAR NA SIDEBAR (com suporte a mobile)
-const sidebarContainer = document.querySelector(".sidebar") || document.querySelector("aside");
-if (sidebarContainer && !document.getElementById("btn-sidebar-back")) {
-    const btnBackSidebar = document.createElement("button");
-    btnBackSidebar.id = "btn-sidebar-back";
-    btnBackSidebar.innerHTML = "⬅️ Voltar para os Estudos";
-    btnBackSidebar.style.cssText = "width: 90%; margin: 10px auto; padding: 10px; background: #2c2c3e; color: #ff5b5b; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-weight: bold; display: block;";
-    
-    btnBackSidebar.addEventListener("click", () => {
-        isCoverActive = true;
-        
-        // 🆕 Fechar sidebar no mobile ao voltar
-        if (window.innerWidth <= 768 && sidebarContainer) {
-            sidebarContainer.classList.remove("mobile-open");
-            const overlay = document.querySelector(".sidebar-overlay");
-            if (overlay) overlay.classList.remove("active");
+    // BOTÃO MENU HAMBURGUER (DEVE VIR ANTES DO BOTÃO VOLTAR)
+    const menuToggle = document.createElement("button");
+    menuToggle.className = "menu-toggle";
+    menuToggle.innerHTML = "☰";
+    menuToggle.setAttribute("aria-label", "Abrir menu");
+    menuToggle.addEventListener("click", () => {
+        if (sidebarContainer) {
+            sidebarContainer.classList.add("mobile-open");
+            let overlay = document.querySelector(".sidebar-overlay");
+            if (!overlay) {
+                overlay = document.createElement("div");
+                overlay.className = "sidebar-overlay";
+                overlay.addEventListener("click", () => {
+                    sidebarContainer.classList.remove("mobile-open");
+                    overlay.classList.remove("active");
+                });
+                document.body.appendChild(overlay);
+            }
+            setTimeout(() => overlay.classList.add("active"), 10);
         }
-        
-        showParagraph();
     });
-    
-    sidebarContainer.insertBefore(btnBackSidebar, sidebarContainer.firstChild);
-}
+    document.body.insertBefore(menuToggle, document.body.firstChild);
 
-// 🆕 Fechar sidebar ao clicar em um parágrafo (mobile)
-document.addEventListener("click", (e) => {
-    if (e.target.closest(".nav-link") && window.innerWidth <= 768) {
-        setTimeout(() => {
-            const sidebar = document.querySelector(".sidebar");
-            if (sidebar) sidebar.classList.remove("mobile-open");
-            const overlay = document.querySelector(".sidebar-overlay");
-            if (overlay) overlay.classList.remove("active");
-        }, 300);
+    // BOTÃO VOLTAR NA SIDEBAR (com suporte a mobile)
+    if (sidebarContainer && !document.getElementById("btn-sidebar-back")) {
+        const btnBackSidebar = document.createElement("button");
+        btnBackSidebar.id = "btn-sidebar-back";
+        btnBackSidebar.innerHTML = "⬅️ Voltar para os Estudos";
+        btnBackSidebar.style.cssText = "width: 90%; margin: 10px auto; padding: 10px; background: #2c2c3e; color: #ff5b5b; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-weight: bold; display: block;";
+        
+        btnBackSidebar.addEventListener("click", () => {
+            isCoverActive = true;
+            if (window.innerWidth <= 768 && sidebarContainer) {
+                sidebarContainer.classList.remove("mobile-open");
+                const overlay = document.querySelector(".sidebar-overlay");
+                if (overlay) overlay.classList.remove("active");
+            }
+            showParagraph();
+        });
+        
+        sidebarContainer.insertBefore(btnBackSidebar, sidebarContainer.firstChild);
     }
-});
+
+    // Fechar sidebar ao clicar em um parágrafo (mobile)
+    document.addEventListener("click", (e) => {
+        if (e.target.closest(".nav-link") && window.innerWidth <= 768) {
+            setTimeout(() => {
+                const sidebar = document.querySelector(".sidebar");
+                if (sidebar) sidebar.classList.remove("mobile-open");
+                const overlay = document.querySelector(".sidebar-overlay");
+                if (overlay) overlay.classList.remove("active");
+            }, 300);
+        }
+    });
 
     const btnEditMode = document.getElementById("btn-edit-mode");
     const btnSave = document.getElementById("btn-save");
@@ -253,9 +251,12 @@ document.addEventListener("click", (e) => {
         sessionStorage.setItem("sentinela_v8_backup", stateStr);
     }
 
-    // MINI PARSER MARKDOWN
+    // MINI PARSER MARKDOWN (COM SUPORTE A .com1)
     function parseMarkdown(text) {
         if (!text) return "";
+        // Converte #texto# em <span class="com1">texto</span>
+        text = text.replace(/#(.*?)#/g, '<span class="com1">$1</span>');
+        // Converte *texto* em <strong>texto</strong>
         return text.replace(/\*(.*?)\*/g, "<strong>$1</strong>");
     }
 
@@ -297,7 +298,7 @@ document.addEventListener("click", (e) => {
 
     function checkRecapStructure(week) {
         if (!week.recap) {
-            week.recap = { q1: "Por que podemos confiar no “Deus da verdade”?", a1: "", q2: "Como Jeová vai acabar com o mundo...", a2: "", q3: "Por que temos certeza...", a3: "" };
+            week.recap = { q1: "Por que podemos confiar no "Deus da verdade"?", a1: "", q2: "Como Jeová vai acabar com o mundo...", a2: "", q3: "Por que temos certeza...", a3: "" };
         }
         if (week.textoBiblicoSemana === undefined) {
             week.textoBiblicoSemana = '"O teu parecer é o que me guia... Prepara o teu coração para assimilar as joias espirituais da lição desta semana."';
@@ -383,16 +384,10 @@ document.addEventListener("click", (e) => {
         });
     }
 
-   btnVoltarTopo.addEventListener("click", () => {
-    isCoverActive = true;
-    // Fechar sidebar no mobile
-    if (sidebar) {
-        sidebar.classList.remove("mobile-open");
-        const overlay = document.querySelector(".sidebar-overlay");
-        if (overlay) overlay.classList.remove("active");
-    }
-    showParagraph();
-});
+    function showParagraph() {
+        const week = getActiveWeek();
+        checkRecapStructure(week);
+        const sidebar = document.querySelector(".sidebar") || document.querySelector("aside");
 
         // PAINEL INICIAL: MURAL DE BANNERS
         if (isCoverActive) {
@@ -505,6 +500,11 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
         editMode.classList.add("hidden");
         if(btnEditMode) btnEditMode.style.display = "inline-flex";
 
+        // Esconder botão de editar no mobile
+        if (window.innerWidth <= 768 && btnEditMode) {
+            btnEditMode.style.display = "none";
+        }
+
         let btnVoltarTopo = document.getElementById("btn-leitura-voltar");
         if (!btnVoltarTopo) {
             btnVoltarTopo = document.createElement("button");
@@ -513,6 +513,12 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
             btnVoltarTopo.style.cssText = "background: #2c2c3e; color: #00e676; border: 1px solid #444; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem;";
             btnVoltarTopo.addEventListener("click", () => {
                 isCoverActive = true;
+                // Fechar sidebar no mobile
+                if (window.innerWidth <= 768 && sidebar) {
+                    sidebar.classList.remove("mobile-open");
+                    const overlay = document.querySelector(".sidebar-overlay");
+                    if (overlay) overlay.classList.remove("active");
+                }
                 showParagraph();
             });
         }
@@ -571,8 +577,15 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
             });
         } else { viewBibleContainer.classList.add("hidden"); }
 
+        // Garantir que o conteúdo seja renderizado
         viewHtmlContent.innerHTML = "";
         viewHtmlContent.appendChild(btnVoltarTopo);
+        
+        // Forçar reflow para mobile
+        setTimeout(() => {
+            viewHtmlContent.style.display = "block";
+            viewHtmlContent.style.visibility = "visible";
+        }, 10);
 
         const labelTemaEstudoTopo = document.createElement("div");
         labelTemaEstudoTopo.style.cssText = "background: rgba(26, 115, 232, 0.1); border-left: 4px solid #1a73e8; padding: 10px 15px; margin-bottom: 20px; color: #fff; font-weight: bold; font-size: 1.05rem;";
@@ -628,7 +641,6 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
             const week = getActiveWeek();
             checkRecapStructure(week);
             
-            // Correção estrutural: Esconder visualização e exibir formulário de edição
             viewMode.classList.add("hidden");
             editMode.classList.remove("hidden");
 
@@ -663,7 +675,7 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
                 `;
             } else {
                 editParagraphNum.innerText = `Parágrafo ${activeParagraph}`;
-                if(fieldsParagraphOnly) fieldsParagraphOnly.classList.remove("hidden"); // Corrigido para reexibir campos normais
+                if(fieldsParagraphOnly) fieldsParagraphOnly.classList.remove("hidden");
                 if(fieldsRecapOnly) fieldsRecapOnly.classList.add("hidden");
 
                 const recapContainer = document.getElementById("recap-dynamic-editor-container");
@@ -684,7 +696,6 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
                     pData.bibleTexts.forEach(b => { createBibleFieldRow(b.ref, b.transcription); });
                 } else { createBibleFieldRow("", ""); }
                 
-                // Forçar o cálculo automático de altura inicial das caixas com texto
                 setTimeout(() => {
                     [inputResposta, inputTextual, inputPastoral, inputRevistaTexto].forEach(ajustarAlturaTextArea);
                 }, 20);
@@ -727,7 +738,6 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
                     imageUrl: inputImageUrl.value, revistaTexto: inputRevistaTexto.value, bibleTexts: collectedBibleTexts, 
                     imageComment: inputImageComment.value, textual: inputTextual.value, resposta: inputResposta.value, pastoral: inputPastoral.value
                 };
-                // Varredura inteligente automática de textos bíblicos ao salvar
                 extrairEAutoPreencherVersiculos(inputRevistaTexto.value, pContent);
                 extrairEAutoPreencherVersiculos(inputTextual.value, pContent);
 
@@ -833,6 +843,15 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
             reader.readAsText(file);
         });
     }
+
+    // Reavaliar ao redimensionar
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= 768 && btnEditMode) {
+            btnEditMode.style.display = "none";
+        } else if (btnEditMode && !isCoverActive) {
+            btnEditMode.style.display = "inline-flex";
+        }
+    });
 
     updateWeeksDropdown(); buildParagraphsMenu(); showParagraph();
 });
