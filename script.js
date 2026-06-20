@@ -683,51 +683,56 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (btnSave) {
-        btnSave.addEventListener("click", () => {
-            const week = getActiveWeek();
-            if (activeParagraph === "recap") {
-                week.recap = {
-                    q1: document.getElementById("dynamic-recap-q1")?.value || "",
-                    a1: document.getElementById("dynamic-recap-a1")?.value || "",
-                    q2: document.getElementById("dynamic-recap-q2")?.value || "",
-                    a2: document.getElementById("dynamic-recap-a2")?.value || "",
-                    q3: document.getElementById("dynamic-recap-q3")?.value || "",
-                    a3: document.getElementById("dynamic-recap-a3")?.value || ""
-                };
-                const recapContainer = document.getElementById("recap-dynamic-editor-container");
-                if (recapContainer) recapContainer.remove();
-            } else {
-                const newKey = inputParagraphKey.value.trim();
-                if (!newKey) return alert("Identificação vazia.");
+    btnSave.addEventListener("click", () => {
+        const week = getActiveWeek();
+        if (activeParagraph === "recap") {
+            week.recap = {
+                q1: document.getElementById("dynamic-recap-q1")?.value || "",
+                a1: document.getElementById("dynamic-recap-a1")?.value || "",
+                q2: document.getElementById("dynamic-recap-q2")?.value || "",
+                a2: document.getElementById("dynamic-recap-a2")?.value || "",
+                q3: document.getElementById("dynamic-recap-q3")?.value || "",
+                a3: document.getElementById("dynamic-recap-a3")?.value || ""
+            };
+            const recapContainer = document.getElementById("recap-dynamic-editor-container");
+            if (recapContainer) recapContainer.remove();
+        } else {
+            const newKey = inputParagraphKey.value.trim();
+            if (!newKey) return alert("Identificação vazia.");
 
-                const collectedBibleTexts = [];
-                const rows = dynamicBibleFieldsContainer.querySelectorAll(".bible-field-row");
-                rows.forEach(row => {
-                    const ref = row.querySelector(".input-dynamic-ref").value.trim();
-                    const transcription = row.querySelector(".input-dynamic-transcription").value.trim();
-                    if (ref !== "") {
-                        collectedBibleTexts.push({ ref: ref, transcription: transcription });
-                        if (transcription !== "") {
-                            if (!appState.customBibleVerses) appState.customBibleVerses = {};
-                            appState.customBibleVerses[ref.toLowerCase()] = transcription;
-                        }
+            const collectedBibleTexts = [];
+            const rows = dynamicBibleFieldsContainer.querySelectorAll(".bible-field-row");
+            rows.forEach(row => {
+                const ref = row.querySelector(".input-dynamic-ref").value.trim();
+                const transcription = row.querySelector(".input-dynamic-transcription").value.trim();
+                if (ref !== "") {
+                    collectedBibleTexts.push({ ref: ref, transcription: transcription });
+                    if (transcription !== "") {
+                        if (!appState.customBibleVerses) appState.customBibleVerses = {};
+                        appState.customBibleVerses[ref.toLowerCase()] = transcription;
                     }
-                });
-                const pContent = {
-                    imageUrl: inputImageUrl.value, revistaTexto: inputRevistaTexto.value, bibleTexts: collectedBibleTexts, 
-                    imageComment: inputImageComment.value, textual: inputTextual.value, resposta: inputResposta.value, pastoral: inputPastoral.value
-                };
-                extrairEAutoPreencherVersiculos(inputRevistaTexto.value, pContent);
-                extrairEAutoPreencherVersiculos(inputTextual.value, pContent);
+                }
+            });
+            const pContent = {
+                imageUrl: inputImageUrl.value, 
+                revistaTexto: inputRevistaTexto.value, 
+                bibleTexts: collectedBibleTexts, 
+                imageComment: inputImageComment.value, 
+                textual: inputTextual.value, 
+                resposta: inputResposta.value, 
+                pastoral: inputPastoral.value
+            };
+            
+            // ✅ APENAS COLETA O QUE VOCÊ ADICIONOU MANUALMENTE
+            // (sem extração automática)
 
-                if (newKey !== activeParagraph) delete week.paragraphs[activeParagraph];
-                week.paragraphs[newKey] = pContent;
-                activeParagraph = newKey;
-            }
-            saveState(); buildParagraphsMenu(); showParagraph();
-        });
-    }
-
+            if (newKey !== activeParagraph) delete week.paragraphs[activeParagraph];
+            week.paragraphs[newKey] = pContent;
+            activeParagraph = newKey;
+        }
+        saveState(); buildParagraphsMenu(); showParagraph();
+    });
+}
     if (btnAddP) {
         btnAddP.addEventListener("click", () => {
             const week = getActiveWeek();
