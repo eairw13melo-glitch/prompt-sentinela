@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
         weeks: {
             "semana_8_junho": {
                 id: "semana_8_junho",
-                title: "8-14 DE JUNHO DE 2026 | O "Deus da verdade" sempre cumpre o que promete",
-                textoBiblicoSemana: '"O teu parecer é o que me guia... Prepara o teu coração para assimilar as joias espirituais da lição desta semana."',
+                title: "8-14 DE JUNHO DE 2026 | O \"Deus da verdade\" sempre cumpre o que promete",
+                textoBiblicoSemana: "\"O teu parecer é o que me guia... Prepara o teu coração para assimilar as joias espirituais da lição desta semana.\"",
                 imageUrlCapa: "https://cms-imgp.jw-cdn.org/img/p/1011202/univ/art/1011202_univ_lsr_lg.jpg",
                 totalParagraphs: 16,
                 recap: {
-                    q1: "Por que podemos confiar no "Deus da verdade"?", a1: "",
+                    q1: "Por que podemos confiar no \"Deus da verdade\"?", a1: "",
                     q2: "Como Jeová vai acabar com o mundo mau de Satanás e o que Ele está fazendo agora para cumprir seu propósito?", a2: "",
                     q3: "Por que temos certeza que nada pode impedir Jeová de agir?", a3: ""
                 },
@@ -156,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("⚠️ Selecione o texto dentro da caixa 'Texto Original da Revista' primeiro!");
             }
         });
-        // ================================================
         
         colunaDireita.appendChild(labelRevista);
         colunaDireita.appendChild(btnHighlightRevista);
@@ -166,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
         containerFlex.appendChild(colunaDireita);
     }
 
-    // Função auxiliar para expandir Textareas de forma responsiva ao digitar ou carregar
+    // Função auxiliar para expandir Textareas
     function ajustarAlturaTextArea(textareaElement) {
         if (!textareaElement) return;
         textareaElement.style.height = "auto";
@@ -181,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // SIDEBAR CONTAINER (declarado antes de ser usado)
     const sidebarContainer = document.querySelector(".sidebar") || document.querySelector("aside");
 
-    // BOTÃO MENU HAMBURGUER (DEVE VIR ANTES DO BOTÃO VOLTAR)
+    // BOTÃO MENU HAMBURGUER PARA MOBILE
     const menuToggle = document.createElement("button");
     menuToggle.className = "menu-toggle";
     menuToggle.innerHTML = "☰";
@@ -210,7 +209,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnBackSidebar.id = "btn-sidebar-back";
         btnBackSidebar.innerHTML = "⬅️ Voltar para os Estudos";
         btnBackSidebar.style.cssText = "width: 90%; margin: 10px auto; padding: 10px; background: #2c2c3e; color: #ff5b5b; border: 1px solid #444; border-radius: 6px; cursor: pointer; font-weight: bold; display: block;";
-        
         btnBackSidebar.addEventListener("click", () => {
             isCoverActive = true;
             if (window.innerWidth <= 768 && sidebarContainer) {
@@ -220,7 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             showParagraph();
         });
-        
         sidebarContainer.insertBefore(btnBackSidebar, sidebarContainer.firstChild);
     }
 
@@ -228,10 +225,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", (e) => {
         if (e.target.closest(".nav-link") && window.innerWidth <= 768) {
             setTimeout(() => {
-                const sidebar = document.querySelector(".sidebar");
-                if (sidebar) sidebar.classList.remove("mobile-open");
-                const overlay = document.querySelector(".sidebar-overlay");
-                if (overlay) overlay.classList.remove("active");
+                const sb = document.querySelector(".sidebar");
+                if (sb) sb.classList.remove("mobile-open");
+                const ov = document.querySelector(".sidebar-overlay");
+                if (ov) ov.classList.remove("active");
             }, 300);
         }
     });
@@ -298,10 +295,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function checkRecapStructure(week) {
         if (!week.recap) {
-            week.recap = { q1: "Por que podemos confiar no "Deus da verdade"?", a1: "", q2: "Como Jeová vai acabar com o mundo...", a2: "", q3: "Por que temos certeza...", a3: "" };
+            week.recap = { q1: "Por que podemos confiar no \"Deus da verdade\"?", a1: "", q2: "Como Jeová vai acabar com o mundo...", a2: "", q3: "Por que temos certeza...", a3: "" };
         }
         if (week.textoBiblicoSemana === undefined) {
-            week.textoBiblicoSemana = '"O teu parecer é o que me guia... Prepara o teu coração para assimilar as joias espirituais da lição desta semana."';
+            week.textoBiblicoSemana = "\"O teu parecer é o que me guia... Prepara o teu coração para assimilar as joias espirituais da lição desta semana.\"";
         }
         if (!week.imageUrlCapa) {
             week.imageUrlCapa = "https://cms-imgp.jw-cdn.org/img/p/1011202/univ/art/1011202_univ_lsr_lg.jpg";
@@ -415,32 +412,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 const progressoPorcentagem = calcularProgressoSemana(currentWeekData);
 
                 htmlCardGrid += `
-                    <div class="banner-card-item" style="background: linear-gradient(rgba(20, 20, 35, 0.82), rgba(20, 20, 35, 0.88)), url('${capaImg}') no-repeat center center; background-size: cover; border-radius: 8px; padding: 15px 12px; border: 1px solid #3a3a55; box-shadow: 0 4px 12px rgba(0,0,0,0.4); text-align: center;
-display: flex; flex-direction: column; justify-content: space-between; min-height: 310px; position: relative; transition: all 0.25s ease-in-out; transform: translateY(0);" onmouseenter="this.style.transform='translateY(-5px)'; this.style.borderColor='#1a73e8';
-this.style.boxShadow='0 8px 20px rgba(0,0,0,0.6)';" onmouseleave="this.style.transform='translateY(0)'; this.style.borderColor='#3a3a55'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.4)';">
+                    <div class="banner-card-item" style="background: linear-gradient(rgba(20, 20, 35, 0.82), rgba(20, 20, 35, 0.88)), url('${capaImg}') no-repeat center center; background-size: cover; border-radius: 8px; padding: 15px 12px; border: 1px solid #3a3a55; box-shadow: 0 4px 12px rgba(0,0,0,0.4); text-align: center; display: flex; flex-direction: column; justify-content: space-between; min-height: 310px; position: relative; transition: all 0.25s ease-in-out; transform: translateY(0);" onmouseenter="this.style.transform='translateY(-5px)'; this.style.borderColor='#1a73e8'; this.style.boxShadow='0 8px 20px rgba(0,0,0,0.6)';" onmouseleave="this.style.transform='translateY(0)'; this.style.borderColor='#3a3a55'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.4)';">
                         <div>
-                            <div class="editable-banner-image-trigger" data-week-id="${weekKey}" title="Duplo clique para mudar a IMAGEM DE CAPA" style="font-size: 1.8rem;
-margin-bottom: 8px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); cursor:pointer; display:inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">📖</div>
+                            <div class="editable-banner-image-trigger" data-week-id="${weekKey}" title="Duplo clique para mudar a IMAGEM DE CAPA" style="font-size: 1.8rem; margin-bottom: 8px; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); cursor:pointer; display:inline-block; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">📖</div>
                             
-                            <h3 class="editable-banner-title" data-week-id="${weekKey}" title="Duplo clique para editar o TÍTULO/DATA" style="color: #ffffff;
-font-size: 0.9rem; margin: 0 0 10px 0; font-weight: bold; line-height: 1.3; padding: 3px; border: 1px dashed transparent; cursor: pointer;
-text-shadow: 0 2px 4px rgba(0,0,0,0.9);">
+                            <h3 class="editable-banner-title" data-week-id="${weekKey}" title="Duplo clique para editar o TÍTULO/DATA" style="color: #ffffff; font-size: 0.9rem; margin: 0 0 10px 0; font-weight: bold; line-height: 1.3; padding: 3px; border: 1px dashed transparent; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.9);">
                                 ${currentWeekData.title}
                             </h3>
                         </div>
                         <div>
-                            <div style="width:100%;
-background: rgba(255,255,255,0.1); border-radius: 10px; height: 6px; margin-bottom: 4px; overflow:hidden;">
-                                <div style="width: ${progressoPorcentagem}%;
-background: ${progressoPorcentagem === 100 ? '#00e676' : '#1a73e8'}; height: 100%; border-radius: 10px;
-transition: width 0.4s ease;"></div>
+                            <div style="width:100%; background: rgba(255,255,255,0.1); border-radius: 10px; height: 6px; margin-bottom: 4px; overflow:hidden;">
+                                <div style="width: ${progressoPorcentagem}%; background: ${progressoPorcentagem === 100 ? '#00e676' : '#1a73e8'}; height: 100%; border-radius: 10px; transition: width 0.4s ease;"></div>
                             </div>
-                            <span style="font-size:0.65rem;
-color:#aaa; display:block; margin-bottom:8px; font-weight:500;">Progresso: ${progressoPorcentagem}%</span>
+                            <span style="font-size:0.65rem; color:#aaa; display:block; margin-bottom:8px; font-weight:500;">Progresso: ${progressoPorcentagem}%</span>
 
-                            <button class="btn-card-start-study" data-week-id="${weekKey}" style="background: #1a73e8;
-color: white; border: none; padding: 8px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 15px; cursor: pointer; width: 100%;
-box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
+                            <button class="btn-card-start-study" data-week-id="${weekKey}" style="background: #1a73e8; color: white; border: none; padding: 8px 12px; font-size: 0.8rem; font-weight: bold; border-radius: 15px; cursor: pointer; width: 100%; box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
                                 Estudar Lição ➡️
                             </button>
                         </div>
@@ -577,15 +563,8 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
             });
         } else { viewBibleContainer.classList.add("hidden"); }
 
-        // Garantir que o conteúdo seja renderizado
         viewHtmlContent.innerHTML = "";
         viewHtmlContent.appendChild(btnVoltarTopo);
-        
-        // Forçar reflow para mobile
-        setTimeout(() => {
-            viewHtmlContent.style.display = "block";
-            viewHtmlContent.style.visibility = "visible";
-        }, 10);
 
         const labelTemaEstudoTopo = document.createElement("div");
         labelTemaEstudoTopo.style.cssText = "background: rgba(26, 115, 232, 0.1); border-left: 4px solid #1a73e8; padding: 10px 15px; margin-bottom: 20px; color: #fff; font-weight: bold; font-size: 1.05rem;";
@@ -615,7 +594,7 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.4); transition: background 0.2s;">
         let blocoRevistaHtml = pData.revistaTexto && pData.revistaTexto.trim() !== "" ? `
         <div style="background-color: #2d2d2d; border-left: 5px solid #ffd54f; padding: 14px; border-radius: 6px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
             <span style="font-weight: bold; font-size: 0.8rem; text-transform: uppercase; color: #ffd54f; display:block; margin-bottom: 6px; letter-spacing: 0.5px;">Trecho Original da Revista:</span>
-            <p style="margin:0; font-weight: 400; color: #e0e0e0 !important; line-height: 1.6; font-size: 1rem;">${pData.revistaTexto ? parseMarkdown(pData.revistaTexto).replace(/\n/g, '<br>') : ''}</p>
+            <p style="margin:0; font-weight: 400; color: #e0e0e0 !important; line-height: 1.6; font-size: 1rem;">${parseMarkdown(pData.revistaTexto).replace(/\n/g, '<br>')}</p>
         </div>
         ` : "";
         restOfContent.innerHTML = `
