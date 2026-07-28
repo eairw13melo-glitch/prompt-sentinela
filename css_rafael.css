@@ -1,0 +1,22 @@
+.citation {
+  border-left: .25em solid #315c55;
+  padding: .6em .8em;
+  margin: 1em 0;
+}
+.citationsource { text-decoration: none; }
+.comentarioTextoBiblico {
+  color: #8f1d1d;
+  background: #fff1f1;
+  padding: .5em;
+}
+mark.marca-amarela { background: #fff59d; color: inherit; }
+mark.marca-azul { background: #b3e5fc; color: inherit; }
+mark.marca-laranja { background: #ffcc80; color: inherit; }
+mark.marca-amarela,
+mark.marca-azul,
+mark.marca-laranja {
+  padding: 0 .05em;
+  border-radius: .12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

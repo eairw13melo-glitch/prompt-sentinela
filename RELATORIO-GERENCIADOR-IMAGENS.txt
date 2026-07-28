@@ -1,0 +1,33 @@
+RELATÓRIO DA ATUALIZAÇÃO — GERENCIADOR DE IMAGENS
+
+IMPLEMENTADO
+- Conversão automática de caminhos relativos para URLs absolutas.
+- Leitura de src, data-img-small-src, data-src, data-original, data-lazy-src e srcset.
+- Tentativa automática da imagem principal e das alternativas.
+- Identificação do formato por Content-Type, extensão e assinatura binária.
+- Conversão para WebP quando o navegador permite.
+- Preservação de GIF.
+- Cache em IndexedDB com fallback em memória.
+- Seleção manual de arquivo quando houver bloqueio de rede/CORS.
+- Caminho local automático: images/image-001.ext.
+- Inclusão da imagem no XHTML.
+- Inclusão da imagem dentro do EPUB.
+- Inclusão no manifesto content.opf.
+- Auditoria visual por imagem.
+- Botão para baixar todas as imagens em ZIP.
+- Tentativa automática de resolver imagens antes de copiar ou baixar XHTML.
+- Tentativa automática antes de gerar EPUB.
+
+TESTES
+- Artigo real: 2 imagens detectadas com URL principal e URL menor.
+- URL relativa convertida para https://wol.jw.org/...
+- Imagem em data URL incorporada ao XHTML: aprovado.
+- Imagem incorporada ao EPUB: aprovado.
+- Recurso declarado no manifesto: aprovado.
+- Fallback da primeira origem inválida para a segunda origem: aprovado.
+- ZIP de imagens com manifesto: aprovado.
+- Extração do artigo real mantida: 18 parágrafos, 16 perguntas, 33 referências únicas e 2 imagens.
+- Erros de sintaxe JavaScript: 0.
+
+LIMITAÇÃO EXTERNA
+A incorporação automática depende de o servidor permitir o download pelo navegador. Quando houver bloqueio CORS, o sistema oferece seleção manual do arquivo.

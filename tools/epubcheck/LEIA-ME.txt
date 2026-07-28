@@ -1,0 +1,4 @@
+O EPUBCheck oficial será instalado nesta pasta automaticamente na primeira validação.
+Também é possível executar INSTALAR-EPUBCHECK.cmd manualmente.
+Requisito: Java 11 ou superior disponível no comando java.
+Versão configurada: EPUBCheck 5.3.0.

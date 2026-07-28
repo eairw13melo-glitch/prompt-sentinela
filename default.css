@@ -1,0 +1,28 @@
+body {
+  font-family: serif;
+  line-height: 1.55;
+  margin: 5%;
+  color: #161616;
+}
+article {
+  max-width: 42em;
+  margin: 0 auto;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1em auto;
+}
+figure { margin: 1.4em 0; }
+figcaption {
+  font-size: .9em;
+  text-align: center;
+}
+.missing-image {
+  display: block;
+  border: 1px solid #999;
+  padding: .75em;
+  margin: 1em 0;
+  font-style: italic;
+}

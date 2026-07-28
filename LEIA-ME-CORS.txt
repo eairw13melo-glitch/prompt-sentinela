@@ -1,0 +1,45 @@
+EXTRATOR A SENTINELA — CORREÇÃO DO DOWNLOAD DE IMAGENS
+======================================================
+
+POR QUE O ERRO "FAILED TO FETCH" ACONTECIA?
+--------------------------------------------
+O navegador bloqueia a leitura das imagens externas por CORS. A imagem pode
+abrir normalmente em uma aba, mas o JavaScript local não recebe os bytes para
+colocá-la no XHTML e no EPUB.
+
+COMO ABRIR O SISTEMA A PARTIR DE AGORA
+--------------------------------------
+1. Extraia todos os arquivos do ZIP para uma pasta nova.
+2. Clique duas vezes em INICIAR-SISTEMA.bat.
+3. Mantenha a janela preta aberta.
+4. O navegador abrirá automaticamente em um endereço semelhante a:
+   http://127.0.0.1:8765/index.html
+5. Use a plataforma normalmente.
+6. Em Preparar estudo > Imagens, confirme que aparece:
+   "Servidor local: ativo — fallback CORS disponível".
+7. Clique em "Baixar e incorporar todas".
+
+IMPORTANTE
+----------
+Não abra o index.html diretamente com dois cliques. O endereço file:/// não
+consegue usar o servidor local e o bloqueio CORS continuará acontecendo.
+
+REQUISITO
+---------
+O iniciador usa Python 3. Se o Windows disser que Python não foi encontrado,
+instale o Python 3 e marque a opção "Add Python to PATH" durante a instalação.
+
+SEGURANÇA
+---------
+O servidor:
+- funciona apenas no próprio computador (127.0.0.1);
+- aceita downloads apenas de domínios oficiais jw.org e jw-cdn.org;
+- aceita somente HTTPS;
+- limita cada imagem a 35 MB;
+- não envia o artigo ou os projetos para serviços externos.
+
+FALLBACK MANUAL
+---------------
+Se o próprio servidor remoto estiver indisponível, use "Abrir origem", salve a
+imagem no computador e depois use "Selecionar arquivo" no cartão correspondente.
+Esse método não depende de CORS.

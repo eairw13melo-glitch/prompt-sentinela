@@ -1,0 +1,28 @@
+MELHORIAS RECOMENDADAS PARA AS PRÓXIMAS VERSÕES
+===============================================
+
+1. Pacote executável sem Python
+   Criar um pequeno executável Windows assinado que inicia o servidor local sem
+   exigir instalação do Python.
+
+2. Fila de processamento
+   Baixar e converter no máximo duas imagens simultaneamente para reduzir uso de
+   memória e evitar bloqueios do servidor remoto.
+
+3. Cache por hash do conteúdo
+   Reaproveitar a mesma imagem quando ela aparecer novamente em outro estudo,
+   mesmo que a URL seja diferente.
+
+4. Auditoria obrigatória antes do EPUB
+   Bloquear a exportação se houver imagem marcada para inclusão sem arquivo local.
+
+5. Relatório de tamanho
+   Mostrar o tamanho original, o tamanho WebP e a economia percentual por imagem.
+
+6. Redimensionamento inteligente
+   Limitar imagens muito grandes à largura útil de leitura, preservando qualidade
+   e reduzindo bastante o tamanho final do EPUB.
+
+7. Teste de regressão automatizado
+   Usar o article real fornecido como caso fixo para verificar parágrafos,
+   perguntas, textos bíblicos, imagens, XHTML e EPUB em toda atualização.

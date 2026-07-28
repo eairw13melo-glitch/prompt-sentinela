@@ -1,0 +1,43 @@
+EXTRATOR A SENTINELA — ATUALIZAÇÕES 1, 2, 3 E 5
+===================================================
+
+COMO INICIAR
+1. Extraia toda a pasta.
+2. Abra INICIAR-SISTEMA.cmd.
+3. Mantenha a janela do servidor aberta.
+4. Use o endereço localhost aberto automaticamente.
+
+1. IMPORTAÇÃO DIRETA POR URL
+- Cole uma URL HTTPS de jw.org ou wol.jw.org.
+- Clique em “Importar URL”.
+- O servidor local baixa a página, e a plataforma retém somente o elemento <article>.
+- Por segurança, outros domínios são recusados.
+
+2. COMPARAÇÃO LADO A LADO
+- Abra Revisão > Comparar origem e saída.
+- A coluna esquerda mostra o <article> original.
+- A coluna direita mostra o XHTML final.
+- Vermelho: removido na limpeza.
+- Verde: acrescentado na preparação do EPUB.
+- A rolagem das duas colunas é sincronizada.
+
+3. EPUBCHECK OFICIAL
+- Abra Prévia e exportação.
+- Clique em “Validar com EPUBCheck”.
+- Na primeira execução, o servidor tenta baixar automaticamente o EPUBCheck 5.3.0 oficial.
+- Requisito: Java 11 ou superior disponível no comando java.
+- Como alternativa, execute INSTALAR-EPUBCHECK.cmd.
+- O relatório apresenta erros fatais, erros, avisos, códigos, arquivos e linhas.
+
+5. PERFIS DE EXPORTAÇÃO
+- Equilibrado: WebP 0,85; até 1800 px; EPUB completo.
+- EPUB leve: WebP 0,72; até 1400 px; compressão ZIP mais alta.
+- Alta qualidade: WebP 0,92; até 2400 px.
+- Somente XHTML: organiza e baixa apenas o XHTML.
+- Personalizado: usa os valores definidos manualmente.
+
+OBSERVAÇÕES
+- Ao alterar qualidade ou dimensão, imagens já processadas voltam a “pendente” para evitar exportação com configuração antiga.
+- O EPUB continua bloqueado quando a auditoria encontra conteúdo perdido ou imagens incluídas não resolvidas.
+- O Reset seguro continua disponível no menu Projeto.
+- Os links css_rafael.css e default.css continuam sendo inseridos no XHTML e no EPUB.
