@@ -1,0 +1,25 @@
+JW VÍDEO → TEXTO v1.1 — GERAR EXE NO GITHUB
+============================================
+
+IMPORTANTE:
+O arquivo EXE NÃO está neste ZIP. Este projeto faz o GitHub gerar o EXE em uma máquina Windows.
+
+PASSOS:
+1. Entre em github.com e crie um repositório novo.
+2. Envie TODOS os arquivos e pastas deste projeto.
+   ATENÇÃO: a pasta .github precisa ser enviada.
+3. No repositório, clique em Actions.
+4. Abra: "Compilar JW Video Texto EXE".
+5. Clique em Run workflow > Run workflow.
+6. Aguarde a execução terminar com marca verde.
+7. Abra a execução concluída.
+8. Em Artifacts, clique em "JW-Video-Texto-Windows".
+9. O GitHub baixará um ZIP.
+10. Extraia esse ZIP. O arquivo desejado estará lá:
+
+    JW-Video-Texto.exe
+
+Também será incluído:
+    JW-Video-Texto.sha256.txt
+
+O EXE é gerado pelo runner oficial windows-latest do GitHub Actions.
