@@ -1,0 +1,74 @@
+name: Compilar JW Video Texto EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "jw_video_texto.pyw"
+      - "requirements.txt"
+      - ".github/workflows/build-windows-exe.yml"
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: Gerar EXE Windows
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Baixar o projeto
+        uses: actions/checkout@v7
+
+      - name: Configurar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: "pip"
+
+      - name: Atualizar pip e instalar dependencias
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Verificar sintaxe
+        shell: pwsh
+        run: |
+          python -m py_compile jw_video_texto.pyw
+
+      - name: Compilar executavel
+        shell: pwsh
+        run: |
+          python -m PyInstaller `
+            --noconfirm `
+            --clean `
+            --onefile `
+            --windowed `
+            --name "JW-Video-Texto" `
+            jw_video_texto.pyw
+
+      - name: Validar EXE gerado
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "dist/JW-Video-Texto.exe")) {
+            throw "O executavel dist/JW-Video-Texto.exe nao foi gerado."
+          }
+          Get-Item "dist/JW-Video-Texto.exe" | Format-List Name,Length,LastWriteTime
+          Get-FileHash "dist/JW-Video-Texto.exe" -Algorithm SHA256 | Tee-Object -FilePath "dist/JW-Video-Texto.sha256.txt"
+
+      - name: Enviar EXE para download
+        uses: actions/upload-artifact@v4
+        with:
+          name: JW-Video-Texto-Windows
+          path: |
+            dist/JW-Video-Texto.exe
+            dist/JW-Video-Texto.sha256.txt
+          if-no-files-found: error
+          retention-days: 30
